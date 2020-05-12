@@ -1,0 +1,78 @@
+canvas{
+	transition: all 0.5s;
+}
+body
+{
+	background: #023859;
+	margin: 0;
+	font-family: 'Jost', sans-serif;
+}
+.info{
+	text-align: center;
+	font-size: 25px;
+	margin: 10% auto;
+	margin-top: 7%;
+	font-weight: bolder;
+	line-height: 30px;
+	color: white;
+}
+h1{
+	text-align: center;
+	font-size: 3.1rem;
+	font-weight: normal;
+	background-color: #0487D9;
+	color: white;
+	margin: 0;
+	padding: 20px 0;
+	user-select: none;
+}
+#play{
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	background:#F2F2F2;
+	height: 35px;
+	user-select: none;
+}
+#scoreDisplay
+{
+	float: left;
+	font-weight: 700;
+	height: 32px;
+	margin-left: 25%;
+	margin-right: 0;
+	font-size: 28px;
+}
+#timer
+{
+	font-weight: 700;
+	float: right;
+	margin-right: 25%;
+	font-size: 28px;
+}
+button
+{
+	margin-right: 2%;
+	height: 100%;
+	width: auto;
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: #0487D9;
+	vertical-align: top;
+	border: none;
+	outline: none;
+	user-select: none;
+	background-color: #F2F2F2;
+	font-family: 'Jost', sans-serif;
+}
+button:hover
+{
+	background-color: #0487D9;
+	color: #F2F2F2;
+}
+.selected
+{
+	opacity: 0;
+	transition: opacity 0.4s;
+}
+
