@@ -1,8 +1,9 @@
 window.onload = function () 
 {
-	if(playAgain)
+	var check= localStorage.getItem("wannaReplay");
+	if(check === "1")
 	{
-		var abcd = document.getElementById("start");
+		var  abcd = document.getElementById('start');
 		abcd.click();
 	}
 };
@@ -10,6 +11,7 @@ window.onload = function ()
 // Start Game Function
 function startGame()
 {
+	var animateId;
 	info.remove();
 	myGameArea.start();
 	createCircle();
@@ -32,7 +34,6 @@ var myGameArea =
 		this.canvas.setAttribute("id","container");
 	}
 }
-var animateId;
 var pause = false;
 var sec=10,ms=0,count,sec_alt,ms_alt;
 var test = true;
@@ -113,24 +114,26 @@ var index = [];
 var remCircle = [];
 var remRadius = [];
 var startTimer = false;
-var playAgain = false;
 var playBtn = document.getElementById("start");
 var pauseBtn = document.getElementById('pause');
 var resumeBtn = document.getElementById("resume");
+var playAgain = document.getElementById('playAgain');
 // Play Button
 playBtn.onclick = function () 
 {
+	localStorage.setItem("wannaReplay",0);
+	this.style.display = 'none';
+	playAgain.style.removeProperty('display');
+	playAgain.style.display = "inline-block";
 	resetConditions();
-	cancelAnimationFrame(animateId);
 	startGame();
-	if(this.textContent === "Play Again?")
-	{
-		// this.textContent = "Play";
-		playAgain = true;
-		location.reload();
-	}
 }
-
+// Play Again Button
+playAgain.onclick = function() 
+{
+	localStorage.setItem("wannaReplay",1);
+  	location.reload();
+}
 // Pause Button
 pauseBtn.addEventListener('click',function()
 {
@@ -333,7 +336,6 @@ function calculateScore ()
 function resetConditions()
 {
 	circleArray.length = 0;
-	playAgain = false;
 	gameOver = false;
 	interval = 0;
 	pause = false, end = false, overflow = false, startTimer = false, test = true;
@@ -346,7 +348,6 @@ function resetConditions()
 	index = [];
 	remCircle = [];
 	remRadius = [];
-	cancelAnimationFrame(animateId);
 }
 // Animate Function
 function animate()

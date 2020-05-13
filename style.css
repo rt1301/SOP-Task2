@@ -7,6 +7,24 @@ body
 	margin: 0;
 	font-family: 'Jost', sans-serif;
 }
+#playAgain
+{
+	display: none;
+	padding: 0;
+	text-align: center;
+	background:#F2F2F2;
+	height: 35px;
+	user-select: none;
+}
+#playAgain:hover
+{
+	background-color: #0487D9;
+	color: #F2F2F2;
+}
+.inital
+{
+	display: none;
+}
 .info{
 	text-align: center;
 	font-size: 25px;
