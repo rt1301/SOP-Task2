@@ -1,3 +1,12 @@
+window.onload = function () 
+{
+	if(playAgain)
+	{
+		var abcd = document.getElementById("start");
+		abcd.click();
+	}
+};
+
 // Start Game Function
 function startGame()
 {
@@ -27,6 +36,7 @@ var animateId;
 var pause = false;
 var sec=10,ms=0,count,sec_alt,ms_alt;
 var test = true;
+var gameOver = false;
 // StopWatch Function
 var stopwatch = 
 {
@@ -103,19 +113,24 @@ var index = [];
 var remCircle = [];
 var remRadius = [];
 var startTimer = false;
+var playAgain = false;
 var playBtn = document.getElementById("start");
 var pauseBtn = document.getElementById('pause');
 var resumeBtn = document.getElementById("resume");
 // Play Button
-playBtn.addEventListener("click",function () 
+playBtn.onclick = function () 
 {
 	resetConditions();
+	cancelAnimationFrame(animateId);
 	startGame();
 	if(this.textContent === "Play Again?")
 	{
-		this.textContent = "Play";
+		// this.textContent = "Play";
+		playAgain = true;
+		location.reload();
 	}
-});
+}
+
 // Pause Button
 pauseBtn.addEventListener('click',function()
 {
@@ -241,6 +256,11 @@ function createCircle()
 	var y=Math.random() * ((window.innerHeight - 145) - radius*2) + radius;
 	circleArray.push(new Circle(x,y,dx,dy,radius,true));
 }
+if(gameOver)
+{
+	circleArray.length = 0;
+	return 1;
+}
 }
 // Incrementing the number of bubbles as time Progresses
 function increment()
@@ -253,12 +273,13 @@ function increment()
 	{
 		interval = setInterval(function () 
 		{
-			var radius= Math.random()*20 + 20 ;
+			/*var radius= Math.random()*20 + 20 ;
 		    var x=Math.random() * ((window.innerWidth - 23) - radius*2) + radius;
 		    var dx  = (Math.random() - 0.5)*2 ;
 		    var dy = (Math.random() - 0.5)*2 ;
 			var y=Math.random() * ((window.innerHeight - 145) - radius*2) + radius;
-		    circleArray.push(new Circle(x,y,dx,dy,radius,true));
+		    circleArray.push(new Circle(x,y,dx,dy,radius,true));*/
+		    createCircle();
 		   	for(var i=0; i<circleArray.length;i++)
 		   	{
 		   		if(!circleArray[i].isLiving)
@@ -311,13 +332,17 @@ function calculateScore ()
 // Reset Conditions
 function resetConditions()
 {
-	circleArray =[];
+	circleArray.length = 0;
+	playAgain = false;
+	gameOver = false;
+	interval = 0;
 	pause = false, end = false, overflow = false, startTimer = false, test = true;
 	sec = 10, ms = 0;
 	nCircle = 1;
 	groupArea = 0;
 	occupied = 0;
-	j=0, score = 0, time = 400;
+	j=0, score = 0;
+	time = 400;
 	index = [];
 	remCircle = [];
 	remRadius = [];
@@ -342,6 +367,8 @@ function animate()
 				c.fillText('Game Over!!',(myGameArea.canvas.width - 200)/2,(myGameArea.canvas.height)/2);
 			},500);
 			playBtn.textContent = "Play Again?";
+			gameOver = true;
+			circleArray.length = 0;
 			return 1;
 		}
 		else
@@ -355,7 +382,7 @@ function animate()
 					{
 						circleArray[i].update();
 					}
-					myGameArea.canvas.addEventListener("mousedown",function () 
+					myGameArea.canvas.addEventListener("click",function () 
 					{
 						for(var i=0;i<circleArray.length;i++)
 					{
