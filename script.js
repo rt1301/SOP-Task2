@@ -97,6 +97,7 @@ var stopwatch =
   }
 };
 var end = false;
+var play = false;
 var scoreDisplay = document.getElementById('score');
 var timer = document.getElementById('timer');
 var nCircle = 1;
@@ -114,15 +115,20 @@ var index = [];
 var remCircle = [];
 var remRadius = [];
 var startTimer = false;
+var ability = 2;
+var abilityInterval;
 var playBtn = document.getElementById("start");
 var pauseBtn = document.getElementById('pause');
 var resumeBtn = document.getElementById("resume");
 var playAgain = document.getElementById('playAgain');
+var liquidLuck = document.getElementById('liquidLuck');
+var sound = new Audio('sound.mp3');
 // Play Button
 playBtn.onclick = function () 
 {
 	localStorage.setItem("wannaReplay",0);
 	this.style.display = 'none';
+	play = true;
 	playAgain.style.removeProperty('display');
 	playAgain.style.display = "inline-block";
 	resetConditions();
@@ -150,6 +156,34 @@ resumeBtn.addEventListener('click',function()
 		animate();
 	}
 });
+// Felix-Felicis ability
+liquidLuck.onclick = function()
+{
+	if(play)
+	{
+		var temp;
+		abilityInterval = 0;
+		flag = 0;
+		temp = time + 100;
+		ability--;
+		if(ability>=0)
+		{
+			abilityInterval = setInterval(function() 
+			{
+				time = temp;
+			},1);
+			setTimeout(function() 
+			{
+				clearInterval(abilityInterval);
+				time = temp - 100;
+			},5000);
+		}
+		if(ability === 0)
+		{
+			this.style.display = 'none';
+		}
+	}
+}
 var maxRadius = 60;
 var mouse = {
 	x: undefined,
@@ -276,12 +310,6 @@ function increment()
 	{
 		interval = setInterval(function () 
 		{
-			/*var radius= Math.random()*20 + 20 ;
-		    var x=Math.random() * ((window.innerWidth - 23) - radius*2) + radius;
-		    var dx  = (Math.random() - 0.5)*2 ;
-		    var dy = (Math.random() - 0.5)*2 ;
-			var y=Math.random() * ((window.innerHeight - 145) - radius*2) + radius;
-		    circleArray.push(new Circle(x,y,dx,dy,radius,true));*/
 		    createCircle();
 		   	for(var i=0; i<circleArray.length;i++)
 		   	{
@@ -358,6 +386,7 @@ function animate()
 			myGameArea.canvas.classList.add('selected');
 			calculateScore();
 			end = true;
+			bgMusic.pause();
 			setTimeout(function () 
 			{
 				var c = myGameArea.context;
@@ -385,6 +414,7 @@ function animate()
 					}
 					myGameArea.canvas.addEventListener("click",function () 
 					{
+						sound.play();
 						for(var i=0;i<circleArray.length;i++)
 					{
 						circleArray[i].remove();

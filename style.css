@@ -21,6 +21,19 @@ body
 	background-color: #0487D9;
 	color: #F2F2F2;
 }
+#liquidLuck
+{
+	padding: 0;
+	text-align: center;
+	background:#F2F2F2;
+	height: 35px;
+	user-select: none;
+}
+#liquidLuck:hover
+{
+	background-color: #0487D9;
+	color: #F2F2F2;
+}
 .inital
 {
 	display: none;
@@ -58,7 +71,7 @@ h1{
 	font-weight: 700;
 	height: 32px;
 	margin-left: 25%;
-	margin-right: 0;
+	margin-right: auto;
 	font-size: 28px;
 }
 #timer
